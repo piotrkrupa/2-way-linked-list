@@ -1,47 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-typedef struct dlist{
+typedef struct list{
 	int data;
-	struct dlist *next, *prev;
-}type_dlist;
+	struct list *next, *prev;
+}type_list;
 
-typedef struct dlistVar{
-	type_dlist *head, *tail;
-	unsigned count;
-}type_dlistVar;
+typedef struct list_handle{
+	type_list *head, *tail;
+	unsigned int counter;
+}type_list_handle, *p_type_list_handle;
 
-void l_init(type_dlistVar *List){
-	List->head  = List->tail  = NULL;
-	List->count = 0;
+void l_init(p_type_list_handle Dlist){
+	Dlist->head = NULL; 
+	Dlist->tail = NULL;
+	Dlist->counter = 0;
 }
 
-void l_print(type_dlistVar *List){
-	type_dlist *p;
-	p = List->head;
+void l_print(p_type_list_handle Dlist){
+	int i;
+	type_list *p;
+	p = Dlist->head;
+	printf("\nlist size: %u\n", Dlist->counter);
 	while(p){
-		printf("asd %d: %d", List->count, p->data);
-		p = p->next;
+		for(i=0; i < Dlist->counter; i++){
+			printf("%u: %d\n", i+1, p->data);
+			p = p->next;
+		}
 	}
 }
 
-void l_add_front(type_dlistVar *List){
-	type_dlist *p;
-	p = malloc(sizeof(type_dlist));
-	printf("type int:");
-	scanf_s("%d", p->data);
-	p->prev = NULL;
-	p->next = List->head;
-	List->tail = p;
-	List->count++;
+void l_add_front(p_type_list_handle Dlist){
+	type_list *p;
 
+	p = malloc(sizeof(type_list));
+	printf("type int: ");
+	scanf_s("%d", &p->data);
+	p->prev = NULL;
+	p->next = Dlist->head;
+	Dlist->head = p;
+	Dlist->counter++;
+	//printf("addfront %u", Dlist->counter);
+	if(p->next){
+		p->next->prev = p;
+	}else(Dlist->tail = p);
 }
 
 int main(){
 
-	type_dlistVar *List;
+	p_type_list_handle Dlist = (p_type_list_handle)malloc(sizeof(type_list_handle)); //rzutowanie! malloc zwraca wskaünik na void, a øe p_type_list_handle voidem nie jest...przyda sie rzutowacnie
+	memset(Dlist,NULL,sizeof(type_list_handle));
+	
 
-	printf("asd");
+	l_init(Dlist);
+	l_add_front(Dlist);
+	l_add_front(Dlist);
+	l_add_front(Dlist);
+	l_add_front(Dlist);
+	//l_add_front(Dlist);
+	l_print(Dlist);
+
+	getchar();
 	getchar();
 	return EXIT_SUCCESS;
 }
