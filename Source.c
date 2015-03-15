@@ -33,7 +33,7 @@ void l_print(p_type_list_handle Dlist){
 	printf("\n");
 }
 //add element at front (new head) +next,prev
-void l_add_front(p_type_list_handle Dlist){
+p_type_list_handle l_add_front(p_type_list_handle Dlist){
 	type_list *p;
 
 	p = malloc(sizeof(type_list));
@@ -48,9 +48,10 @@ void l_add_front(p_type_list_handle Dlist){
 	if(p->next){
 		p->next->prev = p;
 	}else(Dlist->tail = p);
+	return Dlist;
 }
 //add element at back (new tail) +next,prev
-void l_add_back(p_type_list_handle Dlist){
+p_type_list_handle l_add_back(p_type_list_handle Dlist){
 	type_list *p;
 
 	p = malloc(sizeof(type_list));
@@ -64,6 +65,7 @@ void l_add_back(p_type_list_handle Dlist){
 	if(p->prev){
 		p->prev->next = p;
 	}else(Dlist->head = p);
+	return Dlist;
 }
 
 int menu(){
@@ -96,9 +98,9 @@ int main(){
 	do{
 		n=menu();
 		switch(n){
-			case 1: l_add_front(Dlist);
+			case 1: Dlist = l_add_front(Dlist);
 					break;
-			case 2: l_add_back(Dlist);
+			case 2: Dlist = l_add_back(Dlist);
 					break;
 			/*case 3:	head=add_beforepos(head);
 					break;
