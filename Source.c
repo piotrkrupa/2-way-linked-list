@@ -30,7 +30,7 @@ void l_print(p_type_list_handle Dlist){
 		}
 	}
 }
-
+//add element at front (new head) +next,prev
 void l_add_front(p_type_list_handle Dlist){
 	type_list *p;
 
@@ -42,9 +42,27 @@ void l_add_front(p_type_list_handle Dlist){
 	Dlist->head = p;
 	Dlist->counter++;
 	//printf("addfront %u", Dlist->counter);
+
 	if(p->next){
 		p->next->prev = p;
 	}else(Dlist->tail = p);
+}
+//add element at back (new tail) +next,prev
+void l_add_back(p_type_list_handle Dlist){
+	type_list *p;
+
+	p = malloc(sizeof(type_list));
+	printf("type int: ");
+	scanf_s("%d", &p->data);
+	p->next = NULL;
+	p->prev = Dlist->tail;
+	Dlist->tail = p;
+	Dlist->counter++;
+	
+	if(p->prev){
+		p->prev->next = p;
+	}else(Dlist->head = p);
+
 }
 
 int main(){
@@ -57,9 +75,12 @@ int main(){
 	l_add_front(Dlist);
 	l_add_front(Dlist);
 	l_add_front(Dlist);
-	l_add_front(Dlist);
 	//l_add_front(Dlist);
 	l_print(Dlist);
+	l_add_back(Dlist);
+	l_add_back(Dlist);
+	l_print(Dlist);
+
 
 	getchar();
 	getchar();
