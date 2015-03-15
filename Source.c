@@ -21,6 +21,7 @@ void l_init(p_type_list_handle Dlist){
 void l_print(p_type_list_handle Dlist){
 	int i;
 	type_list *p;
+
 	p = Dlist->head;
 	printf("\nlist size: %u\n", Dlist->counter);
 	while(p){
@@ -29,13 +30,14 @@ void l_print(p_type_list_handle Dlist){
 			p = p->next;
 		}
 	}
+	printf("\n");
 }
 //add element at front (new head) +next,prev
 void l_add_front(p_type_list_handle Dlist){
 	type_list *p;
 
 	p = malloc(sizeof(type_list));
-	printf("type int: ");
+	printf("\ntype int at front: ");
 	scanf_s("%d", &p->data);
 	p->prev = NULL;
 	p->next = Dlist->head;
@@ -52,7 +54,7 @@ void l_add_back(p_type_list_handle Dlist){
 	type_list *p;
 
 	p = malloc(sizeof(type_list));
-	printf("type int: ");
+	printf("\ntype int at back: ");
 	scanf_s("%d", &p->data);
 	p->next = NULL;
 	p->prev = Dlist->tail;
@@ -62,27 +64,57 @@ void l_add_back(p_type_list_handle Dlist){
 	if(p->prev){
 		p->prev->next = p;
 	}else(Dlist->head = p);
+}
 
+int menu(){
+	int n;
+	printf("---MENU---\n");
+	printf("1: dodaj na poczatek\n");
+	printf("2: dodaj na koniec\n");
+	/*printf("3: dodaj przed wybrana pozycja\n");
+	printf("4: dodaj za wybrana pozycja\n");
+	printf("5: dodaj za elementem o okreslonej wartosci\n");
+	printf("6: usun z poczatku\n");
+	printf("7: usun z konca\n");
+	//printf("8: usun z wybranej pozycji");*/
+	printf("9: drukuj liste\n");
+	printf("0: wyjscie\n---------\n");
+	printf("wybierz opcje: ");
+	scanf_s("%d", &n);
+	printf("\n");
+	return n;
 }
 
 int main(){
 
+	int n;
 	p_type_list_handle Dlist = (p_type_list_handle)malloc(sizeof(type_list_handle)); //rzutowanie! malloc zwraca wskaünik na void, a øe p_type_list_handle voidem nie jest...przyda sie rzutowacnie
 	memset(Dlist,NULL,sizeof(type_list_handle));
-	
-
 	l_init(Dlist);
-	l_add_front(Dlist);
-	l_add_front(Dlist);
-	l_add_front(Dlist);
-	//l_add_front(Dlist);
-	l_print(Dlist);
-	l_add_back(Dlist);
-	l_add_back(Dlist);
-	l_print(Dlist);
 
-
-	getchar();
-	getchar();
+	printf("%p\n", &Dlist);
+	do{
+		n=menu();
+		switch(n){
+			case 1: l_add_front(Dlist);
+					break;
+			case 2: l_add_back(Dlist);
+					break;
+			/*case 3:	head=add_beforepos(head);
+					break;
+			case 4:	head=add_afterpos(head);
+					break;
+			case 5:	head=add_afterVAR(head);
+					break;
+			case 6: head=delfront(head);
+					break;
+			case 7: head=delback(head);*/
+					break;
+			case 9: l_print(Dlist);
+					break;
+			default: break;
+		}
+	}while(n!=0);
+	system("PAUSE");
 	return EXIT_SUCCESS;
 }
