@@ -23,15 +23,20 @@ void l_print(p_type_list_handle Dlist){
 	type_list *p;
 
 	p = Dlist->head;
-	printf("\nlist size: %u\n", Dlist->counter);
-	//if(Dlist->counter > 0){
-	while(p){
-		for(i=0; i < Dlist->counter; i++){
-			printf("%u: %d\n", i+1, p->data);
-			p = p->next;
+	if(Dlist != NULL){
+		printf("\nlist size: %u\n", Dlist->counter); //if Dlist == NULL ? poprawic	//if(Dlist->counter > 0){
+
+		while(p){
+			for(i=0; i < Dlist->counter; i++){
+				printf("%u: %d\n", i+1, p->data);
+				p = p->next;
+			}
 		}
+		printf("\n");
+	}else{
+		printf("\nlist size: \n");
 	}
-	//}
+
 	printf("\n");
 }
 //add element at front (new head) +next,prev
@@ -89,6 +94,25 @@ p_type_list_handle l_del_front(p_type_list_handle Dlist){
 	return Dlist;
 }
 
+p_type_list_handle l_del_back(p_type_list_handle Dlist){ //problem z tym!!
+	type_list *p;
+
+	p = Dlist->tail;
+	if(Dlist->counter > 0){
+		if(p->prev){
+			p->prev->next = NULL;
+			Dlist->tail = p->prev;
+			free(p);
+			Dlist->counter--;
+		}else{
+			Dlist->tail = NULL;
+			free(p);
+			Dlist->counter--;
+		}
+	}
+	return Dlist;
+}
+
 int menu(){
 	int n;
 	printf("---MENU---\n");
@@ -98,7 +122,7 @@ int menu(){
 	printf("4: dodaj za wybrana pozycja\n");
 	printf("5: dodaj za elementem o okreslonej wartosci\n");*/
 	printf("6: usun z poczatku\n");
-	//printf("7: usun z konca\n");
+	printf("7: usun z konca\n");
 	//printf("8: usun z wybranej pozycji")
 	printf("9: drukuj liste\n");
 	printf("0: wyjscie\n---------\n");
@@ -131,8 +155,8 @@ int main(){
 					break;*/
 			case 6: Dlist = l_del_front(Dlist);
 					break;
-			/*case 7: head=delback(head);
-					break;*/
+			case 7: Dlist = l_del_back(Dlist);
+					break;
 			case 9: l_print(Dlist);
 					break;
 			default: break;
