@@ -88,7 +88,7 @@ p_type_list_handle l_del_front(p_type_list_handle Dlist){
 		}else{
 			Dlist->head = NULL;
 			free(p);
-			Dlist->counter--;
+			Dlist->counter = 0;
 		}
 	}
 	return Dlist;
@@ -107,7 +107,7 @@ p_type_list_handle l_del_back(p_type_list_handle Dlist){ //problem z tym!!
 		}else{
 			Dlist->tail = NULL;
 			free(p);
-			Dlist->counter--;
+			//Dlist->counter--;
 		}
 	}
 	return Dlist;
